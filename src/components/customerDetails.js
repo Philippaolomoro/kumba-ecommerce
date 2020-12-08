@@ -3,7 +3,7 @@ import {Container, Row, Col} from "react-bootstrap";
 
 const CustomerDetails = () => {
 
-  const [data, setData] = useState(null)
+  const [data, setData] = useState({})
 
   useEffect(() => {
 		fetch("https://indapi.kumba.io/webdev/assignment")
@@ -21,14 +21,16 @@ const CustomerDetails = () => {
 					<Row>
 						<Col md={4}></Col>
 						<Col>
-							{data && 
-                <>
-                  <p>{data.user.name}</p>
-                  <p>{data.user.address} </p>
-                  <p>{data.user.about}</p>
-                  <p>{data.user.likes}</p>
-                </>
-              }
+							{!data.user && "Loading..."}
+							{data.user && (
+								<>
+									<ul>
+										<li>{data.user.name}</li>
+										<li>{data.user.address} </li>
+										<li>{data.user.phone}</li>
+									</ul>
+								</>
+							)}
 						</Col>
 					</Row>
 				</Container>

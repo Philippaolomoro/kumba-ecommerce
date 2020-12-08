@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react"; 
-import {Card} from "react-bootstrap";
-import CardDeck from "react-bootstrap/CardDeck";
+import {Row, Col, Card, Container} from "react-bootstrap";
 
 const OrderSummary = () => {
   const [data, setData] = useState({});
@@ -27,74 +26,96 @@ const OrderSummary = () => {
 
 	return (
 		<>
-			<div>This is the order summary page</div>
-			<div>
-				<a href="/">You can go to the customer detail from here</a>
-				<CardDeck>
-						<Card>
-							<Card.Body>
-								<Card.Title>ADDRESS DETAILS</Card.Title>
-								<Card.Text>
-									This card has supporting text below as a natural lead-in to
-									additional content.{" "}
-								</Card.Text>
-							</Card.Body>
-						</Card>
-						<Card>
-							<Card.Body>
-								<Card.Title>RESTAURANT DETAILS</Card.Title>
-								<Card.Text>
-									This card has supporting text below as a natural lead-in to
-									additional content.{" "}
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					<Card>
-						<Card.Body>
-							<Card.Title>ORDER SUMMARY</Card.Title>
-							<Card.Text>
-								<table>
-									<thead>
-										<tr>
-											<td>Name</td>
-											<td>Category</td>
-											<td>Price</td>
-											<td>Quantity</td>
-											<td>tax_pct</td>
-										</tr>
-									</thead>
-									<tbody>
-										{!data.items && "Loading..."}
-										{data.items &&
-											data.items.map((item) => {
-												const {
-													name,
-													category,
-													price,
-													quantity,
-													tax_pct,
-												} = item;
+			<Container fluid>
+				<div>This is the order summary page</div>
+				<div>
+					<a href="/">You can go to the customer detail from here</a>
+					<Row>
+						<Col>
+							<Card>
+								<Card.Body>
+									<Card.Title>ADDRESS DETAILS</Card.Title>
+									<Card.Text>
+										{data.user && (
+											<>
+												<ul>
+													<li>{data.user.name}</li>
+													<li>{data.user.address} </li>
+													<li>{data.user.phone}</li>
+												</ul>
+											</>
+										)}
+									</Card.Text>
+								</Card.Body>
+							</Card>
+							<Card>
+								<Card.Body>
+									<Card.Title>RESTAURANT DETAILS</Card.Title>
+									<Card.Text>
+										{data.restaurant && (
+											<>
+												<ul>
+													<li>{data.restaurant.name}</li>
+													<li>{data.restaurant.street} </li>
+													<li>{data.restaurant.city}</li>
+                          <li>{data.restaurant.state}</li>
+												</ul>
+											</>
+										)}
+									</Card.Text>
+								</Card.Body>
+							</Card>
+						</Col>
+						<Col>
+							<Card>
+								<Card.Body>
+									<Card.Title>ORDER SUMMARY</Card.Title>
+									<Card.Text>
+										<table>
+											<thead>
+												<tr>
+													<td>Name</td>
+													<td>Category</td>
+													<td>Price</td>
+													<td>Quantity</td>
+													<td>tax_pct</td>
+												</tr>
+											</thead>
+											<tbody>
+												{!data.items && "Loading..."}
+												{data.items &&
+													data.items.map((item) => {
+														const {
+															name,
+															category,
+															price,
+															quantity,
+															tax_pct,
+														} = item;
 
-												return (
-													<tr>
-														<td>{name}</td>
-														<td>{category}</td>
-														<td>{price}</td>
-														<td>{quantity}</td>
-														<td>{tax_pct}</td>
-													</tr>
-												);
-											})}
-										<tr>
-											<td>{total}</td>
-										</tr>
-									</tbody>
-								</table>
-							</Card.Text>
-						</Card.Body>
-					</Card>
-				</CardDeck>
-			</div>
+														return (
+															<tr>
+																<td>{name}</td>
+																<td>{category}</td>
+																<td>{price}</td>
+																<td>{quantity}</td>
+																<td>{tax_pct}</td>
+															</tr>
+														);
+													})}
+												<div>
+													<h4>Total</h4>
+													<p>{total}</p>
+												</div>
+											</tbody>
+										</table>
+									</Card.Text>
+								</Card.Body>
+							</Card>
+						</Col>
+					</Row>
+				</div>
+			</Container>
 		</>
 	);
 };
