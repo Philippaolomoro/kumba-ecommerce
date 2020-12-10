@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css';
+
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import CustomerDetails from "./components/customerDetails"
 import OrderSummary from "./components/orderSummary"

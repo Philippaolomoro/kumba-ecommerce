@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react"; 
-import {Row, Col, Card, Container} from "react-bootstrap";
+import {Row, Col, Card, CardBody, CardHeader, Container, Table} from "reactstrap";
 
 const OrderSummary = () => {
   const [data, setData] = useState({});
@@ -27,90 +27,85 @@ const OrderSummary = () => {
 	return (
 		<>
 			<Container fluid>
-				<div>This is the order summary page</div>
+				<h2>Order Summary Page</h2>
 				<div>
-					<a href="/">You can go to the customer detail from here</a>
+					<a href="/">My Account</a>
 					<Row>
-						<Col>
+						<Col lg="4">
 							<Card>
-								<Card.Body>
-									<Card.Title>ADDRESS DETAILS</Card.Title>
-									<Card.Text>
+								<CardBody>
+									<CardHeader>ADDRESS DETAILS</CardHeader>
+									<div>
 										{data.user && (
 											<>
-												<ul>
-													<li>{data.user.name}</li>
-													<li>{data.user.address} </li>
-													<li>{data.user.phone}</li>
-												</ul>
+												<h5>{data.user.name}</h5>
+												<p>{data.user.address}</p>
+												<p>{data.user.phone}</p>
 											</>
 										)}
-									</Card.Text>
-								</Card.Body>
+									</div>
+								</CardBody>
 							</Card>
+							<br />
 							<Card>
-								<Card.Body>
-									<Card.Title>RESTAURANT DETAILS</Card.Title>
-									<Card.Text>
-										{data.restaurant && (
-											<>
-												<ul>
-													<li>{data.restaurant.name}</li>
-													<li>{data.restaurant.street} </li>
-													<li>{data.restaurant.city}</li>
-                          <li>{data.restaurant.state}</li>
-												</ul>
-											</>
-										)}
-									</Card.Text>
-								</Card.Body>
+								<CardBody>
+									<CardHeader>RESTAURANT DETAILS</CardHeader>
+									{!data.restaurant && "Loading..."}
+									{data.restaurant && (
+										<>
+											<p>{data.restaurant.name}</p>
+											<p>{data.restaurant.street}</p>
+											<p>{data.restaurant.city}</p>
+											<p>{data.restaurant.state}</p>
+										</>
+									)}
+								</CardBody>
 							</Card>
 						</Col>
-						<Col>
+						<Col lg="8">
 							<Card>
-								<Card.Body>
-									<Card.Title>ORDER SUMMARY</Card.Title>
-									<Card.Text>
-										<table>
-											<thead>
-												<tr>
-													<td>Name</td>
-													<td>Category</td>
-													<td>Price</td>
-													<td>Quantity</td>
-													<td>tax_pct</td>
-												</tr>
-											</thead>
-											<tbody>
-												{!data.items && "Loading..."}
-												{data.items &&
-													data.items.map((item) => {
-														const {
-															name,
-															category,
-															price,
-															quantity,
-															tax_pct,
-														} = item;
+								<CardBody>
+									<CardHeader>ORDER SUMMARY</CardHeader>
+									<Table responsive>
+										<thead>
+											<tr>
+												<td>Name</td>
+												<td>Category</td>
+												<td>Price</td>
+												<td>Quantity</td>
+												<td>tax_pct</td>
+											</tr>
+										</thead>
+										<tbody>
+											{!data.items && "Loading..."}
+											{data.items &&
+												data.items.map((item) => {
+													const {
+														name,
+														category,
+														price,
+														quantity,
+														currency,
+														tax_pct,
+													} = item;
 
-														return (
-															<tr>
-																<td>{name}</td>
-																<td>{category}</td>
-																<td>{price}</td>
-																<td>{quantity}</td>
-																<td>{tax_pct}</td>
-															</tr>
-														);
-													})}
-												<div>
-													<h4>Total</h4>
-													<p>{total}</p>
-												</div>
-											</tbody>
-										</table>
-									</Card.Text>
-								</Card.Body>
+													return (
+														<tr key={name}>
+															<td>{name}</td>
+															<td>{category}</td>
+															<td>{currency} {price}</td>
+															<td>{quantity}</td>
+															<td>{tax_pct}</td>
+														</tr>
+													);
+												})}
+										</tbody>
+									</Table>
+									<div className="total-section">
+										<h4>Total</h4>
+										<p>INR {total}</p>
+									</div>
+								</CardBody>
 							</Card>
 						</Col>
 					</Row>
